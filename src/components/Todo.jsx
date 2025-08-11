@@ -1,9 +1,9 @@
 import Dialog from "./Dialog";
 
-const Todo = ({ todo, todos, setTodos }) => {
+const Todo = ({ todo }) => {
 	return (
 		<div className="bg-blue-200 my-2 p-2 rounded">
-			<Dialog todo={todo} todos={todos} setTodos={setTodos} />
+			<Dialog todo={todo} />
 		</div>
 	);
 };

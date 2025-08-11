@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import { useReducer, useEffect } from "react";
 import { TodoContext } from "./TodoContext";
 
 export const TodoProvider = ({ children }) => {
@@ -27,7 +27,14 @@ export const TodoProvider = ({ children }) => {
 		}
 	};
 
-	const [todos, dispatch] = useReducer(todoReducer, []);
+	const [todos, dispatch] = useReducer(todoReducer, [], () => {
+		const localData = localStorage.getItem("todos");
+		return localData ? JSON.parse(localData) : [];
+	});
+
+	useEffect(() => {
+		localStorage.setItem("todos", JSON.stringify(todos));
+	}, [todos]);
 
 	return (
 		<TodoContext.Provider value={{ todos, dispatch }}>
