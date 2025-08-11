@@ -1,12 +1,10 @@
+import { TodoProvider } from "./context/TodoProvider";
 import TodoList from "./components/TodoList";
-import "./index.css";
 
-function App() {
+export default function App() {
 	return (
-		<div>
+		<TodoProvider>
 			<TodoList />
-		</div>
+		</TodoProvider>
 	);
 }
-
-export default App;

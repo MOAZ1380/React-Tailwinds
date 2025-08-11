@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useTodos } from "../hooks/useTodos";
 
-const Dialog = ({ todo, todos, setTodos }) => {
+const Dialog = ({ todo }) => {
+	const { todos, setTodos } = useTodos();
 	const [isEditing, setIsEditing] = useState(false);
 	const [editedTitle, setEditedTitle] = useState(todo.title);
 
