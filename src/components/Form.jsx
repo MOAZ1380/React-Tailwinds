@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useTodos } from "../hooks/useTodos";
 
 const Form = () => {
-	const { todos, setTodos } = useTodos();
+	const { dispatch } = useTodos();
 	const [formData, setFormData] = useState({ title: "", details: "" });
 
 	const handleChange = (e) => {
@@ -20,7 +20,7 @@ const Form = () => {
 			isCompleted: false,
 		};
 
-		setTodos([...todos, newTodo]);
+		dispatch({ type: "ADD_TODO", payload: newTodo });
 		setFormData({ title: "", details: "" });
 	};
 

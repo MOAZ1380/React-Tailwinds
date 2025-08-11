@@ -2,27 +2,27 @@ import { useState } from "react";
 import { useTodos } from "../hooks/useTodos";
 
 const Dialog = ({ todo }) => {
-	const { todos, setTodos } = useTodos();
+	const { dispatch } = useTodos();
 	const [isEditing, setIsEditing] = useState(false);
 	const [editedTitle, setEditedTitle] = useState(todo.title);
 
 	const handleDelete = () => {
-		setTodos(todos.filter((t) => t.id !== todo.id));
+		dispatch({ type: "REMOVE_TODO", payload: todo.id });
 	};
 
 	const handleSaveEdit = () => {
-		setTodos(
-			todos.map((t) => (t.id === todo.id ? { ...t, title: editedTitle } : t)),
-		);
+		dispatch({
+			type: "EDIT_TODO",
+			payload: { id: todo.id, title: editedTitle },
+		});
 		setIsEditing(false);
 	};
 
 	const handleToggleComplete = () => {
-		setTodos(
-			todos.map((t) =>
-				t.id === todo.id ? { ...t, isCompleted: !t.isCompleted } : t,
-			),
-		);
+		dispatch({
+			type: "TOGGLE_TODO",
+			payload: todo.id,
+		});
 	};
 
 	return (
