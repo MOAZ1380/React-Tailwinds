@@ -12,13 +12,6 @@ const Dialog = ({ todo, mode, onClose }) => {
 		setEditedDetails(todo.details || "");
 	}, [todo]);
 
-	useEffect(() => {
-		if (mode === "toggle") {
-			dispatch({ type: "TOGGLE_TODO", payload: todo.id });
-			onClose();
-		}
-	}, [mode, todo.id, dispatch, onClose]);
-
 	const handleAction = () => {
 		switch (mode) {
 			case "edit":
@@ -70,7 +63,9 @@ const Dialog = ({ todo, mode, onClose }) => {
 			{mode === "view" && (
 				<div>
 					<h3 className="text-lg font-semibold mb-2">{todo.title}</h3>
-					<p className="text-gray-500">{todo.details || "No details"}</p>
+					<p className="text-gray-500 break-words">
+						{todo.details || "No details"}
+					</p>
 					<p className="mt-2 text-sm">
 						Status: {todo.isCompleted ? "✅ Completed" : "❌ Not Completed"}
 					</p>

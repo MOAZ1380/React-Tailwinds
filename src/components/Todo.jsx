@@ -11,9 +11,11 @@ const Todo = ({ todo, onOpenDialog }) => {
 
 	return (
 		<div className="bg-white p-4 rounded-lg shadow-sm border flex flex-col gap-2 hover:shadow-md transition">
-			<div>
+			<div
+				onClick={() => onOpenDialog(todo, "view")}
+				className="cursor-pointer">
 				<h3 className="text-lg font-semibold text-gray-800">{todo.title}</h3>
-				<p className="text-gray-500">{todo.details}</p>
+				<p className="text-gray-500 line-clamp-2">{todo.details}</p>
 				<span
 					className={`inline-block mt-2 px-2 py-1 text-xs rounded-full ${
 						todo.isCompleted
