@@ -44,7 +44,7 @@ const Todo = ({ todo, onOpenDialog }) => {
 							: "bg-green-300 hover:bg-green-400"
 					}`}
 					onClick={toggleTodo}>
-					{todo.isCompleted ? "↩️ Uncomplete" : "✅ Complete"}
+					{todo.isCompleted ? "↩️ Uncompleted" : "✅ Complete"}
 				</button>
 			</div>
 		</div>
