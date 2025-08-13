@@ -1,81 +1,48 @@
 import { useTodos } from "../hooks/useTodos";
 import { useState } from "react";
+import Dialog from "./Dialog";
 
-const Todo = ({ todo, onOpenDialog }) => {
+const Todo = ({ todo }) => {
 	const { dispatch } = useTodos();
-	const [isEditing, setIsEditing] = useState(false);
-	const [editedTitle, setEditedTitle] = useState(todo.title);
+	const [dialogMode, setDialogMode] = useState(null);
 
-	const handleDelete = (e) => {
-		e.stopPropagation();
-		dispatch({ type: "REMOVE_TODO", payload: todo.id });
-	};
-
-	const handleToggleComplete = (e) => {
-		e.stopPropagation();
+	const toggleTodo = () => {
 		dispatch({ type: "TOGGLE_TODO", payload: todo.id });
 	};
 
-	const handleEdit = (e) => {
-		e.stopPropagation();
-		setIsEditing(true);
-	};
-
-	const handleSaveEdit = (e) => {
-		e.stopPropagation();
-		dispatch({
-			type: "EDIT_TODO",
-			payload: { id: todo.id, title: editedTitle },
-		});
-		setIsEditing(false);
-	};
-
 	return (
-		<div className="bg-blue-200 my-2 p-4 rounded-lg shadow-md flex items-center justify-between">
-			<div
-				className="flex-1 cursor-pointer"
-				onClick={onOpenDialog}
-				title="Show Details">
-				{isEditing ? (
-					<input
-						type="text"
-						value={editedTitle}
-						onChange={(e) => setEditedTitle(e.target.value)}
-						className="border p-1 mr-2"
-						onClick={(e) => e.stopPropagation()}
-					/>
-				) : (
-					<>
-						<h3 className="text-lg font-semibold">{todo.title}</h3>
-						<p className="text-gray-700">{todo.description}</p>
-					</>
-				)}
-			</div>
-			<div className="flex gap-1 ml-2">
-				{isEditing ? (
-					<button
-						onClick={handleSaveEdit}
-						className="bg-green-500 text-white px-2 py-1 rounded text-xs">
-						Save
-					</button>
-				) : (
-					<button
-						onClick={handleEdit}
-						className="bg-blue-500 text-white px-2 py-1 rounded text-xs">
-						Edit
-					</button>
-				)}
+		<div className="bg-blue-200 my-2 p-2 rounded">
+			<h3>{todo.title}</h3>
+			<p>{todo.description}</p>
+			<p>Status: {todo.isCompleted ? "✅" : "❌"}</p>
+
+			<div className="flex gap-2">
 				<button
-					onClick={handleDelete}
-					className="bg-red-500 text-white px-2 py-1 rounded text-xs">
+					className="bg-yellow-500 text-white px-3 py-1 rounded"
+					onClick={() => setDialogMode("edit")}>
+					Edit
+				</button>
+				<button
+					className="bg-red-500 text-white px-3 py-1 rounded"
+					onClick={() => setDialogMode("delete")}>
 					Delete
 				</button>
 				<button
-					onClick={handleToggleComplete}
-					className="bg-gray-500 text-white px-2 py-1 rounded text-xs">
-					{todo.isCompleted ? "UnCompleted" : "Completed"}
+					className={`px-3 py-1 rounded ${
+						todo.isCompleted ? "bg-gray-500" : "bg-green-500"
+					} text-white`}
+					onClick={toggleTodo}>
+					{todo.isCompleted ? "Uncomplete" : "Complete"}
 				</button>
 			</div>
+
+			{dialogMode && (
+				<Dialog
+					todo={todo}
+					mode={dialogMode}
+					onClose={() => setDialogMode(null)}
+				/>
+			)}
 		</div>
 	);
 };
