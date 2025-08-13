@@ -22,42 +22,53 @@ const TodoList = () => {
 	};
 
 	return (
-		<div className="w-[700px] m-auto mt-[70px]">
-			<h1 className="text-2xl font-bold mb-4">Todo List</h1>
+		<div className="max-w-2xl mx-auto mt-10 bg-gradient-to-br from-blue-50 to-purple-50 p-6 rounded-2xl shadow-lg">
+			<h1 className="text-3xl font-bold mb-6 text-gray-700 text-center">
+				📝 Todo List
+			</h1>
 
-			<div className="flex gap-4 mb-4">
+			<div className="flex gap-4 justify-center mb-6">
 				<button
-					className={`px-4 py-2 rounded ${
-						viewType === "active" ? "bg-blue-500 text-white" : "bg-gray-200"
+					className={`px-4 py-2 rounded-lg transition ${
+						viewType === "active"
+							? "bg-blue-400 text-white shadow-md"
+							: "bg-white text-gray-700 border"
 					}`}
 					onClick={() => setViewType("active")}>
-					Active Todos
+					Active
 				</button>
 				<button
-					className={`px-4 py-2 rounded ${
-						viewType === "completed" ? "bg-blue-500 text-white" : "bg-gray-200"
+					className={`px-4 py-2 rounded-lg transition ${
+						viewType === "completed"
+							? "bg-green-400 text-white shadow-md"
+							: "bg-white text-gray-700 border"
 					}`}
 					onClick={() => setViewType("completed")}>
-					Completed Todos
+					Completed
 				</button>
 			</div>
 
-			{filteredTodos.map((todo) => (
-				<Todo key={todo.id} todo={todo} onOpenDialog={openDialog} />
-			))}
+			<div className="space-y-3">
+				{filteredTodos.map((todo) => (
+					<Todo key={todo.id} todo={todo} onOpenDialog={openDialog} />
+				))}
+			</div>
 
-			{/* Dialog */}
 			{selectedTodo && (
-				<div className="mt-6">
-					<Dialog
-						todo={selectedTodo}
-						mode={dialogMode}
-						onClose={() => setSelectedTodo(null)}
-					/>
+				<div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center p-4 z-50">
+					<div className="bg-white rounded-xl p-6 w-full max-w-md shadow-lg">
+						<Dialog
+							todo={selectedTodo}
+							mode={dialogMode}
+							onClose={() => setSelectedTodo(null)}
+						/>
+					</div>
 				</div>
 			)}
 
-			<Form />
+			<div className="mt-6">
+				<Form />
+			</div>
 		</div>
 	);
 };

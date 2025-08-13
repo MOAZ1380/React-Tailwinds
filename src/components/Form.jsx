@@ -25,13 +25,16 @@ const Form = () => {
 	};
 
 	return (
-		<form onSubmit={handleSubmit}>
+		<form
+			onSubmit={handleSubmit}
+			className="bg-white p-4 rounded-lg shadow-sm border flex flex-col gap-3">
 			<input
 				type="text"
 				placeholder="Title"
 				name="title"
 				value={formData.title}
 				onChange={handleChange}
+				className="border rounded px-3 py-2 w-full"
 			/>
 			<input
 				type="text"
@@ -39,8 +42,13 @@ const Form = () => {
 				name="details"
 				value={formData.details}
 				onChange={handleChange}
+				className="border rounded px-3 py-2 w-full"
 			/>
-			<button type="submit">Add Todo</button>
+			<button
+				type="submit"
+				className="bg-blue-400 hover:bg-blue-500 text-white px-4 py-2 rounded transition">
+				Add Todo
+			</button>
 		</form>
 	);
 };

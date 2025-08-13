@@ -17,9 +17,14 @@ export const TodoProvider = ({ children }) => {
 			case "EDIT_TODO":
 				return state.map((todo) =>
 					todo.id === action.payload.id
-						? { ...todo, title: action.payload.title }
+						? {
+								...todo,
+								title: action.payload.title,
+								details: action.payload.details,
+						  }
 						: todo,
 				);
+
 			default:
 				return state;
 		}
