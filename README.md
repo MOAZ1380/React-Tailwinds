@@ -45,7 +45,7 @@ React-Tailwinds/
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/React-Tailwinds.git
+git clone https://github.com/MOAZ1380/React-Tailwinds.git
 cd React-Tailwinds
 ```
 
