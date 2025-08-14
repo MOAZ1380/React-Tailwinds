@@ -10,20 +10,12 @@ const TodoList = () => {
 	const [selectedTodo, setSelectedTodo] = useState(null);
 	const [dialogMode, setDialogMode] = useState("view");
 
-	const sortByPriority = (a, b) => {
-		const priorityOrder = { high: 3, medium: 2, low: 1 };
-		return priorityOrder[b.priority] - priorityOrder[a.priority];
-	};
-
 	const filteredTodos = useMemo(() => {
-		const baseList =
-			viewType === "all"
-				? todos
-				: viewType === "active"
-				? todos.filter((todo) => !todo.isCompleted)
-				: todos.filter((todo) => todo.isCompleted);
-
-		return [...baseList].sort(sortByPriority);
+		return viewType === "all"
+			? todos
+			: viewType === "active"
+			? todos.filter((todo) => !todo.isCompleted)
+			: todos.filter((todo) => todo.isCompleted);
 	}, [todos, viewType]);
 
 	const openDialog = (todo, mode = "view") => {
