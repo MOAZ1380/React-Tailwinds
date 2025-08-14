@@ -11,13 +11,16 @@ const Form = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		if (!formData.title || !formData.details) return;
+		if (!formData.title) return;
 
 		const newTodo = {
 			id: Date.now(),
 			title: formData.title,
 			details: formData.details,
 			isCompleted: false,
+			completed_at: null,
+			created_at: new Date().toISOString(),
+			update_at: null,
 		};
 
 		dispatch({ type: "ADD_TODO", payload: newTodo });

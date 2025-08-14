@@ -6,14 +6,24 @@ import { useMemo, useState } from "react";
 
 const TodoList = () => {
 	const { todos } = useTodos();
-	const [viewType, setViewType] = useState("active");
+	const [viewType, setViewType] = useState("all");
 	const [selectedTodo, setSelectedTodo] = useState(null);
 	const [dialogMode, setDialogMode] = useState("view");
 
+	const sortByPriority = (a, b) => {
+		const priorityOrder = { high: 3, medium: 2, low: 1 };
+		return priorityOrder[b.priority] - priorityOrder[a.priority];
+	};
+
 	const filteredTodos = useMemo(() => {
-		return viewType === "active"
-			? todos.filter((todo) => !todo.isCompleted)
-			: todos.filter((todo) => todo.isCompleted);
+		const baseList =
+			viewType === "all"
+				? todos
+				: viewType === "active"
+				? todos.filter((todo) => !todo.isCompleted)
+				: todos.filter((todo) => todo.isCompleted);
+
+		return [...baseList].sort(sortByPriority);
 	}, [todos, viewType]);
 
 	const openDialog = (todo, mode = "view") => {
@@ -30,12 +40,21 @@ const TodoList = () => {
 			<div className="flex gap-4 justify-center mb-6">
 				<button
 					className={`px-4 py-2 rounded-lg transition ${
+						viewType === "all"
+							? "bg-indigo-400 text-white shadow-md"
+							: "bg-white text-gray-700 border"
+					}`}
+					onClick={() => setViewType("all")}>
+					All ({todos.length})
+				</button>
+				<button
+					className={`px-4 py-2 rounded-lg transition ${
 						viewType === "active"
 							? "bg-blue-400 text-white shadow-md"
 							: "bg-white text-gray-700 border"
 					}`}
 					onClick={() => setViewType("active")}>
-					Active
+					Active ({todos.filter((todo) => !todo.isCompleted).length})
 				</button>
 				<button
 					className={`px-4 py-2 rounded-lg transition ${
@@ -44,19 +63,35 @@ const TodoList = () => {
 							: "bg-white text-gray-700 border"
 					}`}
 					onClick={() => setViewType("completed")}>
-					Completed
+					Completed ({todos.filter((todo) => todo.isCompleted).length})
 				</button>
 			</div>
 
-			<div className="space-y-3">
-				{filteredTodos.map((todo) => (
-					<Todo key={todo.id} todo={todo} onOpenDialog={openDialog} />
-				))}
-			</div>
+			{filteredTodos.length === 0 ? (
+				<div className="text-center text-gray-500 border rounded-lg p-6 bg-white">
+					<p className="font-medium">👀No tasks found</p>
+					<p className="text-sm mt-1">Try adding a new task below.</p>
+				</div>
+			) : (
+				<div className="space-y-3">
+					{filteredTodos.map((todo) => (
+						<Todo
+							key={todo.id}
+							todo={todo}
+							onOpenDialog={openDialog}
+							viewType={viewType}
+						/>
+					))}
+				</div>
+			)}
 
 			{selectedTodo && (
-				<div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center p-4 z-50">
-					<div className="bg-white rounded-xl p-6 w-full max-w-md shadow-lg">
+				<div
+					className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center p-4 z-50"
+					onClick={() => setSelectedTodo(null)}>
+					<div
+						className="bg-white rounded-xl p-6 w-full max-w-md shadow-lg"
+						onClick={(e) => e.stopPropagation()}>
 						<Dialog
 							todo={selectedTodo}
 							mode={dialogMode}

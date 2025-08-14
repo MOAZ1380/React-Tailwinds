@@ -2,7 +2,7 @@
 import { useTodos } from "../hooks/useTodos";
 import Dialog from "./Dialog";
 
-const Todo = ({ todo, onOpenDialog }) => {
+const Todo = ({ todo, onOpenDialog, viewType }) => {
 	const { dispatch } = useTodos();
 
 	const toggleTodo = () => {
@@ -14,7 +14,9 @@ const Todo = ({ todo, onOpenDialog }) => {
 			<div
 				onClick={() => onOpenDialog(todo, "view")}
 				className="cursor-pointer">
-				<h3 className="text-lg font-semibold text-gray-800">{todo.title}</h3>
+				<h3 className="text-lg font-semibold text-gray-800 line-clamp-2">
+					{todo.title}
+				</h3>
 				<p className="text-gray-500 line-clamp-2">{todo.details}</p>
 				<span
 					className={`inline-block mt-2 px-2 py-1 text-xs rounded-full ${
@@ -24,6 +26,23 @@ const Todo = ({ todo, onOpenDialog }) => {
 					}`}>
 					{todo.isCompleted ? "Completed" : "Pending"}
 				</span>
+				{todo.created_at && (
+					<p className="text-xs text-gray-400 mt-1">
+						Created: {new Date(todo.created_at).toLocaleString()}
+					</p>
+				)}
+
+				{viewType === "active" && todo.update_at && (
+					<p className="text-xs text-gray-400 mt-1">
+						Updated: {new Date(todo.update_at).toLocaleString()}
+					</p>
+				)}
+
+				{viewType === "completed" && (
+					<p className="text-xs text-gray-400 mt-1">
+						Completed: {new Date(todo.completed_at).toLocaleString()}
+					</p>
+				)}
 			</div>
 
 			<div className="flex gap-2 mt-2">

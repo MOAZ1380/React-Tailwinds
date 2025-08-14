@@ -32,6 +32,11 @@ const Dialog = ({ todo, mode, onClose }) => {
 		onClose();
 	};
 
+	useEffect(() => {
+		const onKeyDown = (e) => e.key === "Escape" && onClose();
+		window.addEventListener("keydown", onKeyDown);
+		return () => window.removeEventListener("keydown", onKeyDown);
+	}, [onClose]);
 	return (
 		<div className="p-4">
 			{mode === "edit" && (
@@ -56,13 +61,15 @@ const Dialog = ({ todo, mode, onClose }) => {
 					<h3 className="text-lg font-semibold mb-2">
 						Are you sure you want to delete this todo?
 					</h3>
-					<p className="text-gray-500">{todo.title}</p>
+					<p className="text-gray-500 break-words">{todo.title}</p>
 				</div>
 			)}
 
 			{mode === "view" && (
 				<div>
-					<h3 className="text-lg font-semibold mb-2">{todo.title}</h3>
+					<h3 className="text-lg font-semibold mb-2 break-words">
+						{todo.title}
+					</h3>
 					<p className="text-gray-500 break-words">
 						{todo.details || "No details"}
 					</p>
@@ -87,11 +94,13 @@ const Dialog = ({ todo, mode, onClose }) => {
 							? "Delete"
 							: "Close"}
 					</button>
-					<button
-						onClick={onClose}
-						className="bg-gray-300 hover:bg-gray-400 px-3 py-1 rounded">
-						Close
-					</button>
+					{mode != "view" && (
+						<button
+							onClick={onClose}
+							className="bg-gray-300 hover:bg-gray-400 px-3 py-1 rounded">
+							Close
+						</button>
+					)}
 				</div>
 			)}
 		</div>

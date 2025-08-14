@@ -11,7 +11,11 @@ export const TodoProvider = ({ children }) => {
 			case "TOGGLE_TODO":
 				return state.map((todo) =>
 					todo.id === action.payload
-						? { ...todo, isCompleted: !todo.isCompleted }
+						? {
+								...todo,
+								isCompleted: !todo.isCompleted,
+								completed_at: new Date().toISOString(),
+						  }
 						: todo,
 				);
 			case "EDIT_TODO":
@@ -21,6 +25,7 @@ export const TodoProvider = ({ children }) => {
 								...todo,
 								title: action.payload.title,
 								details: action.payload.details,
+								update_at: new Date().toISOString(),
 						  }
 						: todo,
 				);
