@@ -1,126 +1,95 @@
-# React + Vite
-
 # React Tailwind Todo App
 
-A modern, responsive Todo List application built with **React**, **Tailwind CSS**, and **Vite**. This project demonstrates clean code structure, context-based state management, and a beautiful UI/UX for managing your daily tasks.
+A clean, modern Todo List app built with React, Tailwind CSS, and Vite. It features priority sorting, persistent storage, and a simple, beautiful UI.
 
 ---
 
 ## Features
 
-- **Add, Edit, Delete Todos**
-- **Mark Todos as Completed/Uncompleted**
-- **View Todo Details**
-- **Persistent Storage** (localStorage)
-- **Responsive & Modern UI** (Tailwind CSS)
-- **Dialog Modal for Actions** (Edit, Delete, View)
-- **Separation of Concerns** (Hooks, Context, Components)
+- Add, edit, delete todos
+- Mark todos as completed/uncompleted
+- Set priority (High, Medium, Low) with color badges
+- Sort by priority and creation date automatically
+- View details and status in a dialog
+- All data saved in localStorage
 
 ---
 
-## Project Structure
+## Folder Structure
 
 ```
-React-Tailwinds/
-├── public/
-├── src/
-│   ├── assets/           # Images and static assets
-│   ├── components/       # UI Components (Todo, TodoList, Dialog, Form)
-│   ├── context/          # Context & Provider for Todos
-│   ├── hooks/            # Custom hooks (useTodos)
-│   ├── App.jsx           # Main App component
-│   ├── main.jsx          # Entry point
-│   └── index.css         # Global styles
-├── tailwind.config.js    # Tailwind CSS config
-├── postcss.config.js     # PostCSS config
-├── vite.config.js        # Vite config
-├── package.json          # Project metadata & scripts
-└── README.md             # Project documentation
+src/
+	components/   # Todo, TodoList, Dialog, Form
+	context/      # TodoProvider, TodoContext
+	hooks/        # useTodos custom hook
+	App.jsx       # App root
+	main.jsx      # Entry point
 ```
 
 ---
 
-## Getting Started
+## How it Works
 
-### 1. Clone the Repository
+- **State Management:**
 
-```bash
-git clone https://github.com/MOAZ1380/React-Tailwinds.git
-cd React-Tailwinds
-```
+  - Uses React Context (`TodoProvider`) and `useReducer` for todos.
+  - All actions (add, edit, delete, toggle) are dispatched to the reducer.
+  - State is synced to localStorage automatically.
 
-### 2. Install Dependencies
+- **Adding Todos:**
 
-```bash
-npm install
-```
+  - Use the form to add a todo with title, details, and priority.
+  - Each todo gets a timestamp and is shown instantly.
 
-### 3. Run the Development Server
+- **Sorting:**
 
-```bash
-npm run dev
-```
+  - Todos are always sorted: High > Medium > Low priority, then newest first.
 
-The app will be available at [http://localhost:5173](http://localhost:5173)
+- **UI Components:**
+
+  - `TodoList`: Shows todos, filter buttons, and handles dialog state.
+  - `Todo`: Shows a single todo with colored priority badge and action buttons.
+  - `Dialog`: Modal for editing, deleting, or viewing a todo.
+  - `Form`: Add new todos.
+
+- **Styling:**
+  - All UI uses Tailwind CSS for a modern, responsive look.
 
 ---
 
 ## Usage
 
-- **Add Todo:** Use the form at the bottom to add a new todo with a title and details.
-- **Edit/Delete/Complete:** Each todo has action buttons. Clicking them opens a dialog for confirmation or editing.
-- **View Details:** Click on a todo to view its full details in a dialog.
-- **Filter:** Switch between Active and Completed todos using the filter buttons at the top.
-- **Persistence:** All todos are saved in your browser's localStorage automatically.
+1. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+2. **Run the app:**
+   ```bash
+   npm run dev
+   ```
+3. Open [http://localhost:5173](http://localhost:5173)
 
 ---
 
-## Main Components
+## Example Screenshot
 
-### `TodoList`
-
-- Displays the list of todos.
-- Handles filtering (active/completed).
-- Manages dialog state for actions.
-
-### `Todo`
-
-- Represents a single todo item.
-- Shows action buttons (Edit, Delete, Complete).
-- Clicking a button opens the dialog for that action.
-
-### `Dialog`
-
-- Modal dialog for editing, deleting, or viewing a todo.
-- Handles confirmation and form input.
-
-### `Form`
-
-- Add new todos with title and details.
-
-### `TodoProvider` & `useTodos`
-
-- Context and custom hook for global todo state and dispatch.
-- All state changes (add, edit, delete, toggle) are managed here.
+![App Screenshot](public/empty.png)
 
 ---
 
-## Technologies Used
+## Code Overview
 
-- [React](https://react.dev/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Vite](https://vitejs.dev/)
+- **TodoProvider.jsx**: Sets up the reducer, context, and localStorage sync.
+- **TodoList.jsx**: Filters and sorts todos, manages dialog state, renders the list.
+- **Todo.jsx**: Renders a todo card, shows priority badge, and action buttons.
+- **Dialog.jsx**: Modal for editing, deleting, or viewing a todo.
+- **Form.jsx**: Controlled form for adding todos.
+- **useTodos.js**: Custom hook to access todos and dispatch from context.
 
 ---
 
 ## Customization
 
-- **Styling:** Easily customize the look by editing Tailwind classes in the components.
-- **Persistence:** Uses localStorage by default. You can integrate with an API for real backend support.
-- **Extensibility:** Add features like due dates, priorities, or user authentication as needed.
-
----
-
-## Screenshots
-
-![App Screenshot](public/Screenshot%20from%202025-08-13%2016-01-27.png)
+- Change colors or layout by editing Tailwind classes in components.
+- Add more fields (like due date) by extending the form and reducer.
+- Connect to a backend by replacing localStorage logic in the provider.
