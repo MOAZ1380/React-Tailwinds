@@ -24,48 +24,57 @@ const TodoList = () => {
 	};
 
 	return (
-		<div className="max-w-2xl mx-auto mt-10 bg-gradient-to-br from-blue-50 to-purple-50 p-6 rounded-2xl shadow-lg">
-			<h1 className="text-3xl font-bold mb-6 text-gray-700 text-center">
-				📝 Todo List
+		<div className="max-w-2xl mx-auto mt-12 bg-gradient-to-br from-blue-100 to-purple-100 p-8 rounded-3xl shadow-2xl border border-blue-100">
+			<h1 className="text-4xl font-extrabold mb-8 text-blue-700 text-center tracking-tight drop-shadow-sm flex items-center justify-center gap-2">
+				<span role="img" aria-label="todo">
+					📝
+				</span>{" "}
+				Todo List
 			</h1>
 
-			<div className="flex gap-4 justify-center mb-6">
+			<div className="flex gap-3 justify-center mb-8">
 				<button
-					className={`px-4 py-2 rounded-lg transition ${
+					className={`px-5 py-2 rounded-full font-semibold transition shadow-sm border-2 focus:outline-none focus:ring-2 focus:ring-indigo-300 ${
 						viewType === "all"
-							? "bg-indigo-400 text-white shadow-md"
-							: "bg-white text-gray-700 border"
+							? "bg-indigo-500 text-white border-indigo-500 scale-105"
+							: "bg-white text-indigo-700 border-indigo-200 hover:bg-indigo-50"
 					}`}
 					onClick={() => setViewType("all")}>
-					All ({todos.length})
+					All <span className="ml-1 text-xs font-bold">({todos.length})</span>
 				</button>
 				<button
-					className={`px-4 py-2 rounded-lg transition ${
+					className={`px-5 py-2 rounded-full font-semibold transition shadow-sm border-2 focus:outline-none focus:ring-2 focus:ring-blue-300 ${
 						viewType === "active"
-							? "bg-blue-400 text-white shadow-md"
-							: "bg-white text-gray-700 border"
+							? "bg-blue-500 text-white border-blue-500 scale-105"
+							: "bg-white text-blue-700 border-blue-200 hover:bg-blue-50"
 					}`}
 					onClick={() => setViewType("active")}>
-					Active ({todos.filter((todo) => !todo.isCompleted).length})
+					Active{" "}
+					<span className="ml-1 text-xs font-bold">
+						({todos.filter((todo) => !todo.isCompleted).length})
+					</span>
 				</button>
 				<button
-					className={`px-4 py-2 rounded-lg transition ${
+					className={`px-5 py-2 rounded-full font-semibold transition shadow-sm border-2 focus:outline-none focus:ring-2 focus:ring-green-300 ${
 						viewType === "completed"
-							? "bg-green-400 text-white shadow-md"
-							: "bg-white text-gray-700 border"
+							? "bg-green-500 text-white border-green-500 scale-105"
+							: "bg-white text-green-700 border-green-200 hover:bg-green-50"
 					}`}
 					onClick={() => setViewType("completed")}>
-					Completed ({todos.filter((todo) => todo.isCompleted).length})
+					Completed{" "}
+					<span className="ml-1 text-xs font-bold">
+						({todos.filter((todo) => todo.isCompleted).length})
+					</span>
 				</button>
 			</div>
 
 			{filteredTodos.length === 0 ? (
-				<div className="text-center text-gray-500 border rounded-lg p-6 bg-white">
-					<p className="font-medium">👀No tasks found</p>
-					<p className="text-sm mt-1">Try adding a new task below.</p>
+				<div className="text-center text-gray-500 border-2 border-dashed rounded-2xl p-8 bg-white/80 shadow-inner">
+					<p className="font-semibold text-lg mb-1">👀 No tasks found</p>
+					<p className="text-sm">Try adding a new task below.</p>
 				</div>
 			) : (
-				<div className="space-y-3">
+				<div className="space-y-4">
 					{filteredTodos.map((todo) => (
 						<Todo
 							key={todo.id}
@@ -82,7 +91,7 @@ const TodoList = () => {
 					className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center p-4 z-50"
 					onClick={() => setSelectedTodo(null)}>
 					<div
-						className="bg-white rounded-xl p-6 w-full max-w-md shadow-lg"
+						className="bg-white rounded-2xl p-8 w-full max-w-md shadow-2xl border border-blue-100"
 						onClick={(e) => e.stopPropagation()}>
 						<Dialog
 							todo={selectedTodo}
@@ -93,7 +102,7 @@ const TodoList = () => {
 				</div>
 			)}
 
-			<div className="mt-6">
+			<div className="mt-10">
 				<Form />
 			</div>
 		</div>

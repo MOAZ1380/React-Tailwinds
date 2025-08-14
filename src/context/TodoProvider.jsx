@@ -15,6 +15,7 @@ export const TodoProvider = ({ children }) => {
 								...todo,
 								isCompleted: !todo.isCompleted,
 								completed_at: new Date().toISOString(),
+								update_at: new Date().toISOString(),
 						  }
 						: todo,
 				);
@@ -26,6 +27,7 @@ export const TodoProvider = ({ children }) => {
 								title: action.payload.title,
 								details: action.payload.details,
 								update_at: new Date().toISOString(),
+								priority: action.payload.priority,
 						  }
 						: todo,
 				);

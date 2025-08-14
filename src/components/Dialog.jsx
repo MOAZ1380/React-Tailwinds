@@ -38,55 +38,61 @@ const Dialog = ({ todo, mode, onClose }) => {
 		return () => window.removeEventListener("keydown", onKeyDown);
 	}, [onClose]);
 	return (
-		<div className="p-4">
+		<div className="bg-white rounded-2xl shadow-2xl p-6 min-w-[320px] max-w-[95vw] border border-gray-200">
 			{mode === "edit" && (
 				<div>
 					<input
 						type="text"
 						value={editedTitle}
 						onChange={(e) => setEditedTitle(e.target.value)}
-						className="border p-2 rounded w-full mb-4"
+						className="border border-blue-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 p-2 rounded-lg w-full mb-4 text-lg font-semibold transition"
+						placeholder="Title"
 					/>
 					<textarea
 						value={editedDetails}
 						onChange={(e) => setEditedDetails(e.target.value)}
-						className="border p-2 rounded w-full mb-4"
+						className="border border-blue-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 p-2 rounded-lg w-full mb-4 min-h-[80px] transition"
 						placeholder="Details (optional)"
 					/>
 				</div>
 			)}
 
 			{mode === "delete" && (
-				<div>
-					<h3 className="text-lg font-semibold mb-2">
+				<div className="text-center">
+					<h3 className="text-xl font-bold mb-2 text-red-600">
 						Are you sure you want to delete this todo?
 					</h3>
-					<p className="text-gray-500 break-words">{todo.title}</p>
+					<p className="text-gray-600 break-words italic">{todo.title}</p>
 				</div>
 			)}
 
 			{mode === "view" && (
 				<div>
-					<h3 className="text-lg font-semibold mb-2 break-words">
+					<h3 className="text-2xl font-bold mb-2 break-words text-blue-700">
 						{todo.title}
 					</h3>
-					<p className="text-gray-500 break-words">
+					<p className="text-gray-600 break-words mb-2">
 						{todo.details || "No details"}
 					</p>
-					<p className="mt-2 text-sm">
-						Status: {todo.isCompleted ? "✅ Completed" : "❌ Not Completed"}
+					<p className="mt-2 text-sm font-medium">
+						Status:{" "}
+						{todo.isCompleted ? (
+							<span className="text-green-600">✅ Completed</span>
+						) : (
+							<span className="text-yellow-600">❌ Not Completed</span>
+						)}
 					</p>
 				</div>
 			)}
 
 			{mode !== "toggle" && (
-				<div className="mt-4 flex gap-2">
+				<div className="mt-6 flex gap-3 justify-end">
 					<button
 						onClick={handleAction}
-						className={`px-3 py-1 rounded text-white ${
+						className={`px-4 py-2 rounded-lg font-semibold shadow transition focus:outline-none focus:ring-2 focus:ring-offset-2 ${
 							mode === "delete"
-								? "bg-red-500 hover:bg-red-600"
-								: "bg-green-500 hover:bg-green-600"
+								? "bg-red-500 hover:bg-red-600 text-white"
+								: "bg-green-500 hover:bg-green-600 text-white"
 						}`}>
 						{mode === "edit"
 							? "Save Changes"
@@ -97,7 +103,7 @@ const Dialog = ({ todo, mode, onClose }) => {
 					{mode != "view" && (
 						<button
 							onClick={onClose}
-							className="bg-gray-300 hover:bg-gray-400 px-3 py-1 rounded">
+							className="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg font-semibold shadow transition focus:outline-none focus:ring-2 focus:ring-offset-2">
 							Close
 						</button>
 					)}
