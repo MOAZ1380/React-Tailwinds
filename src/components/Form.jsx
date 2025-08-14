@@ -6,7 +6,7 @@ const Form = () => {
 	const [formData, setFormData] = useState({
 		title: "",
 		details: "",
-		priority: "low",
+		priority: "Low",
 	});
 
 	const handleChange = (e) => {

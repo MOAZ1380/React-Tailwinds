@@ -63,6 +63,25 @@ const Todo = ({ todo, onOpenDialog, viewType }) => {
 					{todo.isCompleted ? "↩️ Uncompleted" : "✅ Complete"}
 				</button>
 			</div>
+			{/* Priority badge */}
+			{todo.priority && (
+				<span
+					className={`mt-2 px-2 py-1 text-xs rounded-full font-bold shadow-sm ${
+						todo.priority === "high"
+							? "bg-red-100 text-red-700 border border-red-300"
+							: todo.priority === "medium"
+							? "bg-yellow-100 text-yellow-700 border border-yellow-300"
+							: "bg-blue-100 text-blue-700 border border-blue-200"
+					}`}
+					title={`Priority: ${todo.priority}`}>
+					{todo.priority.charAt(0).toUpperCase() + todo.priority.slice(1)}
+				</span>
+			)}
+			{viewType === "completed" && todo.completed_at && (
+				<p className="text-xs text-green-500 mt-1">
+					Completed: {new Date(todo.completed_at).toLocaleString()}
+				</p>
+			)}
 		</div>
 	);
 };

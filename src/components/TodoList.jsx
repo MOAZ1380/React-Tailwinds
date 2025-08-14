@@ -10,12 +10,25 @@ const TodoList = () => {
 	const [selectedTodo, setSelectedTodo] = useState(null);
 	const [dialogMode, setDialogMode] = useState("view");
 
+	// Priority order for sorting
+
 	const filteredTodos = useMemo(() => {
-		return viewType === "all"
-			? todos
-			: viewType === "active"
-			? todos.filter((todo) => !todo.isCompleted)
-			: todos.filter((todo) => todo.isCompleted);
+		const priorityOrder = { high: 3, medium: 2, low: 1 };
+		let filtered =
+			viewType === "all"
+				? todos
+				: viewType === "active"
+				? todos.filter((todo) => !todo.isCompleted)
+				: todos.filter((todo) => todo.isCompleted);
+
+		// Sort by priority (high > medium > low), then by created_at (newest first)
+		return filtered.slice().sort((a, b) => {
+			const pa = priorityOrder[a.priority] || 0;
+			const pb = priorityOrder[b.priority] || 0;
+			if (pb !== pa) return pb - pa;
+			// Newest first
+			return new Date(b.created_at) - new Date(a.created_at);
+		});
 	}, [todos, viewType]);
 
 	const openDialog = (todo, mode = "view") => {
